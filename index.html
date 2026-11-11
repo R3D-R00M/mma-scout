@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MMA Scout — бойцы, рейтинг, турниры</title>
+<meta name="description" content="MMA Scout — бесплатное приложение для Android: бойцы ММА, сравнение, рейтинг UFC, турниры, результаты и новости.">
+<meta property="og:title" content="MMA Scout">
+<meta property="og:description" content="Бойцы, сравнение, рейтинг UFC, турниры и новости ММА в одном приложении для Android.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 108 108'%3E%3Crect width='108' height='108' rx='24' fill='%2315181E'/%3E%3Cpath d='M42.5 26.3H65.5L81.7 42.5V65.5L65.5 81.7H42.5L26.3 65.5V42.5Z' fill='none' stroke='%23E5383B' stroke-width='4.2' stroke-linejoin='round'/%3E%3Ccircle cx='51' cy='51' r='11.5' fill='none' stroke='%23F4F1E8' stroke-width='4.4'/%3E%3Cpath d='M59.6 59.6L67.5 67.5' stroke='%23FFB703' stroke-width='5.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #0f1115; --card: #1a1d24; --line: #2a2e37;
+    --text: #f4f1e8; --dim: #9aa0ac; --red: #e5383b; --amber: #ffb703;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 56px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .logo svg { width: 60px; height: 60px; flex: none; }
+  .brand { font-size: 30px; font-weight: 900; letter-spacing: .5px; }
+  .brand span { color: var(--red); }
+  .lang { display: flex; background: var(--card); border-radius: 20px; padding: 3px; flex: none; }
+  .lang button { border: 0; background: none; color: var(--dim); font: 800 14px system-ui, sans-serif; padding: 7px 12px; border-radius: 17px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--red); color: #fff; }
+  .lead { color: var(--dim); font-size: 18px; margin: 18px 0 26px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: #fff; font-weight: 800; font-size: 18px; padding: 16px 26px; border-radius: 14px; text-decoration: none; }
+  .meta { color: var(--dim); font-size: 14px; margin-top: 10px; }
+  h2 { font-size: 20px; margin: 40px 0 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)); gap: 12px; }
+  .card { background: var(--card); border-radius: 14px; padding: 16px; }
+  .card b { display: block; margin-bottom: 4px; }
+  .card p { margin: 0; color: var(--dim); font-size: 15px; }
+  ol { padding-left: 22px; } ol li { margin: 8px 0; }
+  .note { background: var(--card); border-left: 4px solid var(--amber); border-radius: 10px; padding: 12px 14px; color: var(--dim); font-size: 15px; }
+  a { color: var(--amber); }
+  footer { margin-top: 48px; color: var(--dim); font-size: 13px; border-top: 1px solid var(--line); padding-top: 18px; }
+  /* Only the chosen language is visible; !important beats rules like ".card b { display: block }". */
+  html:not([lang="en"]) [data-lang="en"], html[lang="en"] [data-lang="ru"] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div class="logo">
+      <svg viewBox="0 0 108 108" aria-hidden="true">
+        <rect width="108" height="108" rx="24" fill="#15181E"/>
+        <path d="M42.5 26.3H65.5L81.7 42.5V65.5L65.5 81.7H42.5L26.3 65.5V42.5Z" fill="none" stroke="#E5383B" stroke-width="4.2" stroke-linejoin="round"/>
+        <circle cx="51" cy="51" r="11.5" fill="none" stroke="#F4F1E8" stroke-width="4.4"/>
+        <path d="M59.6 59.6L67.5 67.5" stroke="#FFB703" stroke-width="5.2" stroke-linecap="round"/>
+      </svg>
+      <div class="brand">MMA <span>SCOUT</span></div>
+    </div>
+    <div class="lang" role="group" aria-label="Язык / Language">
+      <button type="button" data-set="ru" aria-pressed="true">RU</button>
+      <button type="button" data-set="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+
+  <p class="lead" data-lang="ru">Бойцы, сравнение, рейтинг UFC, турниры и новости ММА в одном бесплатном приложении для Android.</p>
+  <p class="lead" data-lang="en">Fighters, head-to-head comparison, UFC rankings, events and MMA news in one free Android app.</p>
+
+  <a class="btn" href="https://github.com/ramaldanov1991-blip/mma-scout/releases/latest/download/MMAScout.apk">
+    <span data-lang="ru">⬇ Скачать для Android</span><span data-lang="en">⬇ Download for Android</span>
+  </a>
+  <div class="meta" data-lang="ru">Около 1,5 МБ · Android 7.0 и новее · без рекламы и регистрации</div>
+  <div class="meta" data-lang="en">About 1.5 MB · Android 7.0 or newer · no ads, no sign-up</div>
+
+  <h2><span data-lang="ru">Что умеет</span><span data-lang="en">Features</span></h2>
+  <div class="grid">
+    <div class="card"><b data-lang="ru">🔍 Поиск бойцов</b><b data-lang="en">🔍 Fighter search</b>
+      <p data-lang="ru">Рекорд, история профессиональных боёв, способы побед, биография.</p>
+      <p data-lang="en">Record, professional fight history, how fights ended, biography.</p></div>
+    <div class="card"><b data-lang="ru">⚖ Сравнение</b><b data-lang="en">⚖ Compare</b>
+      <p data-lang="ru">Два бойца бок о бок: рост, размах рук, ударка, борьба, форма.</p>
+      <p data-lang="en">Two fighters side by side: height, reach, striking, grappling, form.</p></div>
+    <div class="card"><b data-lang="ru">🏆 Рейтинг UFC</b><b data-lang="en">🏆 UFC rankings</b>
+      <p data-lang="ru">Официальный рейтинг по всем весам и P4P, движение вверх и вниз.</p>
+      <p data-lang="en">Official rankings for every division and P4P, with moves up and down.</p></div>
+    <div class="card"><b data-lang="ru">📅 Турниры и результаты</b><b data-lang="en">📅 Events and results</b>
+      <p data-lang="ru">UFC, PFL, ACA, RAF и HYPE: кард, а в день турнира — результаты в реальном времени.</p>
+      <p data-lang="en">UFC, PFL, ACA, RAF and HYPE: full cards and live results on fight night.</p></div>
+    <div class="card"><b data-lang="ru">🔔 Уведомления</b><b data-lang="en">🔔 Reminders</b>
+      <p data-lang="ru">Напомнит, когда дерётся боец из избранного и когда сегодня турнир.</p>
+      <p data-lang="en">Reminds you when a favorite fighter fights and when it's fight night.</p></div>
+    <div class="card"><b data-lang="ru">📰 Новости</b><b data-lang="en">📰 News</b>
+      <p data-lang="ru">Заголовки из известных изданий на русском и английском со ссылкой на оригинал.</p>
+      <p data-lang="en">Headlines from major outlets in Russian and English, linking to the original.</p></div>
+  </div>
+
+  <h2><span data-lang="ru">Как установить</span><span data-lang="en">How to install</span></h2>
+  <ol data-lang="ru">
+    <li>Нажмите «Скачать для Android» и дождитесь загрузки файла <b>MMAScout.apk</b>.</li>
+    <li>Откройте скачанный файл из уведомления или из папки «Загрузки».</li>
+    <li>Если телефон спросит, разрешите браузеру <b>устанавливать неизвестные приложения</b>, затем вернитесь назад.</li>
+    <li>Нажмите <b>«Установить»</b>. Если Play Защита предупредит о неизвестном разработчике, выберите «Подробнее» → «Всё равно установить».</li>
+  </ol>
+  <ol data-lang="en">
+    <li>Tap “Download for Android” and wait for <b>MMAScout.apk</b> to download.</li>
+    <li>Open the downloaded file from the notification or the Downloads folder.</li>
+    <li>If asked, allow your browser to <b>install unknown apps</b>, then go back.</li>
+    <li>Tap <b>Install</b>. If Play Protect warns about an unknown developer, choose “More details” → “Install anyway”.</li>
+  </ol>
+  <div class="note" data-lang="ru">Приложение не из Google Play, поэтому Android показывает предупреждение. Новые версии ставятся поверх старой, избранное сохраняется.</div>
+  <div class="note" data-lang="en">The app isn't from Google Play, so Android shows a warning. New versions install over the old one and keep your favorites.</div>
+
+  <h2 id="privacy"><span data-lang="ru">Конфиденциальность</span><span data-lang="en">Privacy</span></h2>
+  <p data-lang="ru">MMA Scout не собирает и не отправляет личные данные, не требует регистрации и не показывает рекламу. Избранные бойцы и настройки хранятся только на вашем телефоне. Интернет нужен, чтобы загружать данные с сайтов-источников, перечисленных ниже.</p>
+  <p data-lang="en">MMA Scout doesn't collect or send personal data, needs no account and shows no ads. Favorites and settings stay on your phone. Internet access is used only to load data from the sources listed below.</p>
+
+  <h2><span data-lang="ru">Источники данных</span><span data-lang="en">Data sources</span></h2>
+  <p data-lang="ru">Бойцы и турниры: <a href="https://fighttime.ru/">FightTime.ru</a>, <a href="https://www.espn.com/mma/">ESPN</a>, <a href="https://www.realamericanfreestyle.com/">RAF</a>, <a href="https://www.sherdog.com/">Sherdog</a>. Рейтинг: <a href="https://www.ufc.com/rankings">UFC.com</a>. Биографии: <a href="https://ru.wikipedia.org/">Википедия</a> (CC BY-SA 4.0). Новости: FightTime, Чемпионат, Sports.ru, Спорт-Экспресс, ESPN, MMA Fighting, Sherdog — в приложении только заголовки со ссылкой на оригинал.</p>
+  <p data-lang="en">Fighters and events: <a href="https://fighttime.ru/">FightTime.ru</a>, <a href="https://www.espn.com/mma/">ESPN</a>, <a href="https://www.realamericanfreestyle.com/">RAF</a>, <a href="https://www.sherdog.com/">Sherdog</a>. Rankings: <a href="https://www.ufc.com/rankings">UFC.com</a>. Biographies: <a href="https://en.wikipedia.org/">Wikipedia</a> (CC BY-SA 4.0). News: FightTime, Championat, Sports.ru, Sport-Express, ESPN, MMA Fighting, Sherdog — the app shows headlines only, linking to the original.</p>
+
+  <footer>
+    <span data-lang="ru">MMA Scout — неофициальное приложение, не связано с UFC, PFL, ACA, RAF, HYPE и другими организациями. Все товарные знаки принадлежат их владельцам.</span>
+    <span data-lang="en">MMA Scout is an unofficial app, not affiliated with the UFC, PFL, ACA, RAF, HYPE or any other organization. All trademarks belong to their owners.</span>
+  </footer>
+</main>
+<script>
+  // Russian by default; the visitor's choice is remembered on their device.
+  (function () {
+    var root = document.documentElement;
+    function apply(lang) {
+      root.lang = lang;
+      document.title = lang === "en" ? "MMA Scout — fighters, rankings, events" : "MMA Scout — бойцы, рейтинг, турниры";
+      document.querySelectorAll(".lang button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.set === lang));
+      });
+    }
+    var saved = null;
+    try { saved = localStorage.getItem("lang"); } catch (e) {}
+    apply(saved === "en" ? "en" : "ru");
+    document.querySelectorAll(".lang button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        apply(b.dataset.set);
+        try { localStorage.setItem("lang", b.dataset.set); } catch (e) {}
+      });
+    });
+  })();
+</script>
+</body>
+</html>
