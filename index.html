@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://socialchain.app https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com">
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <title>MMA Scout — бойцы, рейтинг, турниры</title>
 <meta name="description" content="MMA Scout — бесплатное приложение для Android: бойцы ММА, сравнение, рейтинг UFC, турниры, результаты и новости.">
 <meta property="og:title" content="MMA Scout">
@@ -24,6 +26,7 @@
   .lang { display: flex; background: var(--card); border-radius: 20px; padding: 3px; flex: none; }
   .lang button { border: 0; background: none; color: var(--dim); font: 800 14px system-ui, sans-serif; padding: 7px 12px; border-radius: 17px; cursor: pointer; }
   .lang button[aria-pressed="true"] { background: var(--red); color: #fff; }
+  .pi-user { color: var(--amber); font-size: 14px; font-weight: 700; margin-top: 14px; }
   .lead { color: var(--dim); font-size: 18px; margin: 18px 0 26px; }
   .btn { display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: #fff; font-weight: 800; font-size: 18px; padding: 16px 26px; border-radius: 14px; text-decoration: none; }
   .meta { color: var(--dim); font-size: 14px; margin-top: 10px; }
@@ -57,6 +60,8 @@
       <button type="button" data-set="en" aria-pressed="false">EN</button>
     </div>
   </div>
+
+  <div class="pi-user" id="pi-user" hidden></div>
 
   <p class="lead" data-lang="ru">Бойцы, сравнение, рейтинг UFC, турниры и новости ММА в одном бесплатном приложении для Android.</p>
   <p class="lead" data-lang="en">Fighters, head-to-head comparison, UFC rankings, events and MMA news in one free Android app.</p>
@@ -138,6 +143,39 @@
         try { localStorage.setItem("lang", b.dataset.set); } catch (e) {}
       });
     });
+  })();
+
+  // Pi Network sign-in: Pi SDK -> accessToken -> App Studio exchange.
+  // Only the uid/username returned by App Studio are trusted; the session token stays in memory.
+  var piSession = { sessionToken: null, user: null };
+  (function () {
+    var LOGIN_URL = "https://backend.appstudio-u7cm9zhmha0ruwv8.piappengine.com/pi/auth/v1/login";
+    function onIncompletePaymentFound(payment) {
+      // MMA Scout has no Pi payments; nothing to complete.
+      console.log("Incomplete Pi payment found", payment);
+    }
+    async function signInWithPi() {
+      if (typeof window.Pi === "undefined") return; // SDK not loaded (e.g. offline)
+      try {
+        await Pi.init({ version: "2.0" });
+        var auth = await Pi.authenticate(["username"], onIncompletePaymentFound);
+        var res = await fetch(LOGIN_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ accessToken: auth.accessToken })
+        });
+        if (!res.ok) throw new Error("App Studio login failed: " + res.status);
+        var data = await res.json();
+        piSession.sessionToken = data.sessionToken;
+        piSession.user = data.user;
+        var el = document.getElementById("pi-user");
+        el.textContent = "π @" + data.user.username;
+        el.hidden = false;
+      } catch (e) {
+        console.log("Pi sign-in skipped:", e);
+      }
+    }
+    signInWithPi();
   })();
 </script>
 </body>
